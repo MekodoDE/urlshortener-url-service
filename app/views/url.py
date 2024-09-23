@@ -12,7 +12,7 @@ from app.models.schemas import UrlSchema, UrlQueryArgsSchema
 from .utils import generate_random_url_key
 
 # Create a Blueprint for URL management
-blp = Blueprint('Url', 'url', description='URL management')
+blp = Blueprint('Url', 'url', description='URL management', url_prefix="/urls/")
 
 @blp.route('/')
 class Urls(MethodView):
