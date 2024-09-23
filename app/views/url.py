@@ -29,13 +29,15 @@ class Urls(MethodView):
         """
         try:
             jwt_claims = get_jwt()
+            user_id = jwt_claims.get("sub")
             role = jwt_claims.get("role", "viewer")  # Default to 'viewer' if no role is present
         except JWTExtendedException as e:
             abort(401, message="Invalid or expired token")  # Handle token issues specifically
 
-        if role != "admin":
-            abort(403, message="You are not authorized to perform this action")
-        return UrlModel.query.filter_by(**args)
+        if role == "admin":
+            return UrlModel.query.all()
+        else:
+            return UrlModel.query.filter_by(owner_id=user_id).all()
 
     @jwt_required()
     @blp.arguments(UrlSchema(only=["redirect_url", "url_key"]))
