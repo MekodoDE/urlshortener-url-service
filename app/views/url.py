@@ -40,7 +40,7 @@ class Urls(MethodView):
             return UrlModel.query.filter_by(owner_id=user_id).all()
 
     @jwt_required()
-    @blp.arguments(UrlSchema(only=["redirect_url", "url_key"]))
+    @blp.arguments(UrlSchema(only=["redirect_url", "url_key"], partial=True))
     @blp.response(201, UrlSchema)
     def post(self, new_data):
         """
