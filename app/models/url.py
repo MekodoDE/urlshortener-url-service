@@ -13,7 +13,7 @@ class UrlModel(db.Model):
     # Define columns for the Url table
     id = db.Column(sqlalchemy_utils.types.uuid.UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
     owner_id = db.Column(sqlalchemy_utils.types.uuid.UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
-    url_key = db.Column(db.String, unique=True, nullable=False)
-    redirect_url = db.Column(db.String, nullable=False)
+    url_key = db.Column(db.String(255), unique=True, nullable=False)
+    redirect_url = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
