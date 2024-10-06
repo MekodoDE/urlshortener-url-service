@@ -16,7 +16,7 @@ def generate_random_url_key(length=3):
     Returns:
         str: Randomly generated URL key.
     """
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
 
 
 def get_jwt_claims():
