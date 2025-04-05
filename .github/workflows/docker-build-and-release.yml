@@ -80,7 +80,7 @@ jobs:
 
       - name: Extract version from GitVersion
         run: |
-          echo "DOCKER_TAG=${{ steps.gitversion.outputs.semVer }}" >> $GITHUB_ENV
+          echo "DOCKER_TAG=${{ steps.gitversion.outputs.majorMinorPatch }}" >> $GITHUB_ENV
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
