@@ -5,7 +5,7 @@ on:
     branches:
       - automatic_test_pipeline
     tags:
-      - '*'  # This will trigger when any tag is pushed (i.e., version tags)
+      - '*'
   pull_request:
     branches:
       - automatic_test_pipeline
@@ -40,12 +40,12 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest  # Or pytest tests/ if your tests are in a folder
+          pytest  
 
   build:
     name: Build and Push Docker Image
-    #if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    needs: test
 
     permissions:
       contents: read
@@ -81,6 +81,10 @@ jobs:
       - name: Extract version from GitVersion
         run: |
           echo "DOCKER_TAG=${{ steps.gitversion.outputs.majorMinorPatch }}" >> $GITHUB_ENV
+
+      - name: Lowercase repository
+        run: |
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
